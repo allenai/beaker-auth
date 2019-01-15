@@ -1,0 +1,10 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.11.4
+    steps:
+      - checkout
+      - run: go get -u github.com/vektra/mockery/cmd/mockery
+      - run: go generate ./...
+      - run: go test -v ./...

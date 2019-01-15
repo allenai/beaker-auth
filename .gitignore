@@ -1,0 +1,6 @@
+# Vendored dependencies
+/vendor
+
+# Generated files
+mock_*
+mocks/
