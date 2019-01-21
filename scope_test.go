@@ -108,3 +108,39 @@ func TestUnmarshalScope(t *testing.T) {
 		assert.Equal(t, test.Expected, result)
 	}
 }
+
+func TestScopeAllows(t *testing.T) {
+	tests := []struct {
+		Allowed  Scope
+		Target   Scope
+		Expected bool
+	}{
+		// Different class
+		{Allowed: Scope{Read, "a", ""}, Target: Scope{Read, "b", "other"}, Expected: false},
+
+		// Different resource
+		{Allowed: Scope{Read, "a", "b"}, Target: Scope{Read, "a", "other"}, Expected: false},
+
+		// Allow full class
+		{Allowed: Scope{Read, "a", ""}, Target: Scope{Read, "a", "other"}, Expected: true},
+
+		// Allow read
+		{Allowed: Scope{Read, "a", "b"}, Target: Scope{Read, "a", "b"}, Expected: true},
+		{Allowed: Scope{Read, "a", "b"}, Target: Scope{Write, "a", "b"}, Expected: false},
+		{Allowed: Scope{Read, "a", "b"}, Target: Scope{Admin, "a", "b"}, Expected: false},
+
+		// Allow write
+		{Allowed: Scope{Write, "a", "b"}, Target: Scope{Read, "a", "b"}, Expected: true},
+		{Allowed: Scope{Write, "a", "b"}, Target: Scope{Write, "a", "b"}, Expected: true},
+		{Allowed: Scope{Write, "a", "b"}, Target: Scope{Admin, "a", "b"}, Expected: false},
+
+		// Allow admin
+		{Allowed: Scope{Admin, "a", "b"}, Target: Scope{Read, "a", "b"}, Expected: true},
+		{Allowed: Scope{Admin, "a", "b"}, Target: Scope{Write, "a", "b"}, Expected: true},
+		{Allowed: Scope{Admin, "a", "b"}, Target: Scope{Admin, "a", "b"}, Expected: true},
+	}
+
+	for _, test := range tests {
+		assert.Equal(t, test.Expected, test.Allowed.Allows(test.Target), "Allowed: %s, Target: %s", test.Allowed.String(), test.Target.String())
+	}
+}

@@ -97,3 +97,37 @@ func (s *Scope) UnmarshalJSON(b []byte) error {
 	}
 	return s.parse(unquoted)
 }
+
+// Allows returns whether the receiver allows (contains) another scope.
+func (s Scope) Allows(target Scope) bool {
+	if s.Class != target.Class {
+		return false
+	}
+
+	// Receiver must grant full class or the target's specific resource must match.
+	if s.Resource != "" && s.Resource != target.Resource {
+		return false
+	}
+
+	// Granted privilege must equal or exceed the target.
+	switch s.Permission {
+	case Read:
+		return target.Permission == Read
+	case Write:
+		return target.Permission == Read || target.Permission == Write
+	case Admin:
+		return true
+	default:
+		return false
+	}
+}
+
+// AllowedByAny returns whether any granted scopes allow (contain) the receiver.
+func (s Scope) AllowedByAny(grants ...Scope) bool {
+	for _, t := range grants {
+		if t.Allows(s) {
+			return true
+		}
+	}
+	return false
+}
