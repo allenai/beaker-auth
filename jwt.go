@@ -3,6 +3,7 @@ package auth
 import (
 	"net/http"
 
+	"github.com/allenai/beaker-auth/keystore"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
 	"github.com/pkg/errors"
@@ -31,12 +32,12 @@ func (c Claims) Valid() error {
 
 // Signer is a signing authority for creating authentication tokens.
 type Signer struct {
-	keyStore KeyStore
+	keyStore keystore.KeyStore
 	keyFunc  jwt.Keyfunc
 }
 
 // NewSigner creates a token factory given a persistent key store.
-func NewSigner(ks KeyStore) *Signer {
+func NewSigner(ks keystore.KeyStore) *Signer {
 	return &Signer{
 		keyStore: ks,
 		keyFunc: func(t *jwt.Token) (interface{}, error) {

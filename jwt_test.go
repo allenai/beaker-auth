@@ -7,6 +7,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/allenai/beaker-auth/keystore/mocks"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -64,7 +65,7 @@ func TestAuthRequest(t *testing.T) {
 	for name, test := range tests {
 		t.Logf("Running test case: %s", name)
 
-		ks := &MockKeyStore{}
+		ks := &mocks.KeyStore{}
 		ks.On("KeyFromID", test.SigningKeyID).Return(test.StoredKey, test.StoredKeyErr)
 
 		// Sign a fake token.
