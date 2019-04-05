@@ -73,7 +73,7 @@ func (s *Signer) NewToken(claims *Claims) (string, error) {
 func (s *Signer) AuthRequest(r *http.Request) (*Claims, error) {
 	var claims Claims
 
-	ex := request.AuthorizationHeaderExtractor
+	ex := request.OAuth2Extractor
 	opts := []request.ParseFromRequestOption{
 		request.WithClaims(&claims),
 		request.WithParser(&jwt.Parser{ValidMethods: []string{jwt.SigningMethodHS256.Alg()}}),
