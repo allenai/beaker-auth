@@ -12,7 +12,7 @@ import (
 // Implementations are expected to produce stable keys, meaning a given key ID
 // should always result in the same key or an error, even across processes.
 type KeyStore interface {
-	NewKey() (id string, key []byte, err error)
+	WriteKey(id string, key []byte) error
 	KeyFromID(id string) ([]byte, error)
 }
 
@@ -46,15 +46,13 @@ func WithCache(ks KeyStore, ttl time.Duration) *Cache {
 	return &Cache{ks: ks, ttl: ttl, entries: map[string]cacheEntry{}}
 }
 
-// NewKey creates a key in the wrapped key store and caches the result on success.
-//
-// Callers must not modify the returned key.
-func (c *Cache) NewKey() (id string, key []byte, err error) {
-	id, key, err = c.ks.NewKey()
-	if err == nil {
-		c.store(id, key)
+// WriteKey writes a key to the wrapped key store and caches it on success.
+func (c *Cache) WriteKey(id string, key []byte) error {
+	if err := c.ks.WriteKey(id, key); err != nil {
+		return err
 	}
-	return
+	c.store(id, key)
+	return nil
 }
 
 // KeyFromID retreives a key from the cache or, if the entry is absent or expired,

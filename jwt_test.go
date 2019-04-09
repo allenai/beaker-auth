@@ -13,6 +13,48 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestNewToken(t *testing.T) {
+	tests := map[string]struct {
+		KeyID       string
+		Key         []byte
+		KeyErr      error
+		Claims      Claims
+		ExpectedErr string
+	}{
+		"UnknownKey": {
+			KeyID:       "abc123",
+			KeyErr:      errors.New("something happened"),
+			ExpectedErr: "token: failed to get key: something happened",
+		},
+		"Success": {
+			KeyID: "abc123",
+			Key:   []byte("key"),
+			Claims: Claims{
+				Scopes: []Scope{{Permission: Read, Class: "stuff"}},
+				StandardClaims: jwt.StandardClaims{
+					ExpiresAt: time.Now().Add(5 * time.Second).Unix(),
+				},
+			},
+		},
+	}
+
+	for name, test := range tests {
+		t.Logf("Running test case: %s", name)
+
+		ks := &mocks.KeyStore{}
+		ks.On("KeyFromID", test.KeyID).Return(test.Key, test.KeyErr)
+
+		s := NewSigner(ks)
+		token, err := s.NewToken(test.KeyID, &test.Claims)
+		if test.ExpectedErr != "" {
+			assert.EqualError(t, err, test.ExpectedErr)
+			continue
+		}
+		require.NoError(t, err)
+		assert.NotEmpty(t, token)
+	}
+}
+
 func TestAuthRequest(t *testing.T) {
 	tests := map[string]struct {
 		SigningKeyID string

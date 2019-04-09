@@ -1,9 +1,6 @@
 package keystore
 
 import (
-	"crypto/rand"
-	"encoding/hex"
-
 	"github.com/hashicorp/vault/api"
 	"github.com/pkg/errors"
 )
@@ -25,34 +22,22 @@ func NewVaultKeyStore(address, token, secretPath string) (*VaultKeyStore, error)
 	return &VaultKeyStore{client: client, secretPath: secretPath}, nil
 }
 
-// NewKey generates a random key and stores it in Vault.
-func (ks *VaultKeyStore) NewKey() (id string, key []byte, err error) {
-	id, err = randomHex(4)
-	if err != nil {
-		return "", nil, err
-	}
-
-	k, err := randomHex(32)
-	if err != nil {
-		return "", nil, err
-	}
-	key = []byte(k)
-
+// WriteKey writes a key to Vault. Returns an error if a key with the
+// given ID already exists.
+func (ks *VaultKeyStore) WriteKey(id string, key []byte) error {
 	secret, err := ks.client.Logical().Read(ks.secretPath)
 	if err != nil {
-		return "", nil, errors.WithStack(err)
+		return errors.WithStack(err)
 	}
 	if _, ok := secret.Data[id]; ok {
-		// Key collision; try a new key.
-		return ks.NewKey()
+		return errors.New("key collision")
 	}
 
 	secret.Data[id] = key
 	if _, err := ks.client.Logical().Write(ks.secretPath, secret.Data); err != nil {
-		return "", nil, errors.WithStack(err)
+		return errors.WithStack(err)
 	}
-
-	return id, key, nil
+	return nil
 }
 
 // KeyFromID looks up a key by its ID and returns an undefined error
@@ -72,12 +57,4 @@ func (ks *VaultKeyStore) KeyFromID(id string) ([]byte, error) {
 		return nil, errors.New("key is not []byte")
 	}
 	return key, nil
-}
-
-func randomHex(n int) (string, error) {
-	bytes := make([]byte, (n+1)/2)
-	if _, err := rand.Read(bytes); err != nil {
-		return "", err
-	}
-	return hex.EncodeToString(bytes)[:n], nil
 }

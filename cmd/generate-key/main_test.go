@@ -1,4 +1,4 @@
-package keystore
+package main
 
 import (
 	"crypto/rand"

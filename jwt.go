@@ -52,14 +52,14 @@ func NewSigner(ks keystore.KeyStore) *Signer {
 }
 
 // NewToken creates a signed token with the given claims.
-func (s *Signer) NewToken(claims *Claims) (string, error) {
-	kid, key, err := s.keyStore.NewKey()
+func (s *Signer) NewToken(keyID string, claims *Claims) (string, error) {
+	key, err := s.keyStore.KeyFromID(keyID)
 	if err != nil {
-		return "", errors.Wrap(err, "token: failed to create key")
+		return "", errors.Wrap(err, "token: failed to get key")
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, *claims)
-	token.Header[keyIDHeader] = kid
+	token.Header[keyIDHeader] = keyID
 
 	signed, err := token.SignedString(key)
 	if err != nil {

@@ -4,3 +4,6 @@
 # Generated files
 mock_*
 mocks/
+
+# Binaries
+/generate-key
