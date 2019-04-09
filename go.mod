@@ -1,95 +1,9 @@
 module github.com/allenai/beaker-auth
 
 require (
-	contrib.go.opencensus.io/exporter/ocagent v0.4.10 // indirect
-	github.com/Azure/azure-sdk-for-go v27.0.0+incompatible // indirect
-	github.com/Azure/go-autorest v11.7.0+incompatible // indirect
-	github.com/NYTimes/gziphandler v1.1.1 // indirect
-	github.com/SAP/go-hdb v0.14.1 // indirect
-	github.com/aliyun/alibaba-cloud-sdk-go v0.0.0-20190404024044-fa20eadc7680 // indirect
-	github.com/araddon/gou v0.0.0-20190110011759-c797efecbb61 // indirect
-	github.com/aws/aws-sdk-go v1.19.10 // indirect
-	github.com/boombuler/barcode v1.0.0 // indirect
-	github.com/briankassouf/jose v0.9.1 // indirect
-	github.com/centrify/cloud-golang-sdk v0.0.0-20190214225812-119110094d0f // indirect
-	github.com/chrismalek/oktasdk-go v0.0.0-20181212195951-3430665dfaa0 // indirect
-	github.com/coreos/etcd v3.3.12+incompatible // indirect
-	github.com/coreos/go-oidc v2.0.0+incompatible // indirect
-	github.com/coreos/go-semver v0.2.0 // indirect
-	github.com/coreos/pkg v0.0.0-20180928190104-399ea9e2e55f // indirect
-	github.com/dancannon/gorethink v4.0.0+incompatible // indirect
-	github.com/denisenkom/go-mssqldb v0.0.0-20190401154936-ce35bd87d4b3 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/dimchansky/utfbom v1.1.0 // indirect
-	github.com/duosecurity/duo_api_golang v0.0.0-20190308151101-6c680f768e74 // indirect
-	github.com/fullsailor/pkcs7 v0.0.0-20180613152042-8306686428a5 // indirect
-	github.com/gammazero/deque v0.0.0-20190130191400-2afb3858e9c7 // indirect
-	github.com/gammazero/workerpool v0.0.0-20181230203049-86a96b5d5d92 // indirect
-	github.com/garyburd/redigo v1.6.0 // indirect
-	github.com/go-errors/errors v1.0.1 // indirect
-	github.com/go-ldap/ldap v3.0.2+incompatible // indirect
-	github.com/go-sql-driver/mysql v1.4.1 // indirect
-	github.com/go-stomp/stomp v2.0.2+incompatible // indirect
-	github.com/gocql/gocql v0.0.0-20190402132108-0e1d5de854df // indirect
-	github.com/golang/snappy v0.0.1 // indirect
-	github.com/gorilla/websocket v1.4.0 // indirect
-	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0 // indirect
-	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0 // indirect
-	github.com/grpc-ecosystem/grpc-gateway v1.8.5 // indirect
-	github.com/hashicorp/go-gcp-common v0.5.0 // indirect
-	github.com/hashicorp/go-hclog v0.8.0 // indirect
-	github.com/hashicorp/go-memdb v1.0.0 // indirect
-	github.com/hashicorp/go-plugin v1.0.0 // indirect
-	github.com/hashicorp/go-retryablehttp v0.5.3 // indirect
-	github.com/hashicorp/go-sockaddr v1.0.2 // indirect
-	github.com/hashicorp/go-version v1.1.0 // indirect
-	github.com/hashicorp/golang-lru v0.5.1 // indirect
-	github.com/hashicorp/nomad/api v0.0.0-20190403144628-010b9575dbdb // indirect
-	github.com/hashicorp/vault v1.0.3
-	github.com/hashicorp/vault-plugin-auth-alicloud v0.0.0-20190320211238-36e70c54375f // indirect
-	github.com/hashicorp/vault-plugin-auth-azure v0.0.0-20190320211138-f34b96803f04 // indirect
-	github.com/hashicorp/vault-plugin-auth-centrify v0.0.0-20190320211357-44eb061bdfd8 // indirect
-	github.com/hashicorp/vault-plugin-auth-gcp v0.0.0-20190402000036-441a7965e9fe // indirect
-	github.com/hashicorp/vault-plugin-auth-jwt v0.0.0-20190404215900-7ca4cefd94ef // indirect
-	github.com/hashicorp/vault-plugin-auth-kubernetes v0.0.0-20190328163920-79931ee7aad5 // indirect
-	github.com/hashicorp/vault-plugin-secrets-ad v0.0.0-20190327182327-ed2c3d4c3d95 // indirect
-	github.com/hashicorp/vault-plugin-secrets-alicloud v0.0.0-20190320213517-3307bdf683cb // indirect
-	github.com/hashicorp/vault-plugin-secrets-azure v0.0.0-20190320211922-2dc8a8a5e490 // indirect
-	github.com/hashicorp/vault-plugin-secrets-gcp v0.0.0-20190320211452-71903323ecb4 // indirect
-	github.com/hashicorp/vault-plugin-secrets-gcpkms v0.0.0-20190320213325-9e326a9e802d // indirect
-	github.com/hashicorp/vault-plugin-secrets-kv v0.0.0-20190404212640-4807e6564154 // indirect
-	github.com/influxdata/influxdb v1.7.5 // indirect
-	github.com/influxdata/platform v0.0.0-20190117200541-d500d3cf5589 // indirect
-	github.com/jeffchao/backoff v0.0.0-20140404060208-9d7fd7aa17f2 // indirect
-	github.com/jefferai/jsonx v1.0.0 // indirect
-	github.com/jonboulle/clockwork v0.1.0 // indirect
-	github.com/json-iterator/go v1.1.6 // indirect
-	github.com/keybase/go-crypto v0.0.0-20190403132359-d65b6b94177f // indirect
-	github.com/mattbaird/elastigo v0.0.0-20170123220020-2fe47fd29e4b // indirect
-	github.com/michaelklishin/rabbit-hole v1.5.0 // indirect
-	github.com/mitchellh/pointerstructure v0.0.0-20190323210102-2db4bb651397 // indirect
-	github.com/ory-am/common v0.4.0 // indirect
-	github.com/pborman/uuid v1.2.0 // indirect
 	github.com/pkg/errors v0.8.1
-	github.com/pquerna/cachecontrol v0.0.0-20180517163645-1555304b9b35 // indirect
-	github.com/pquerna/otp v1.1.0 // indirect
-	github.com/ryanuber/go-glob v1.0.0 // indirect
-	github.com/samuel/go-zookeeper v0.0.0-20180130194729-c4fab1ac1bec // indirect
-	github.com/soheilhy/cmux v0.1.4 // indirect
-	github.com/streadway/amqp v0.0.0-20190404075320-75d898a42a94 // indirect
+	github.com/stretchr/objx v0.1.1 // indirect
 	github.com/stretchr/testify v1.3.0
-	github.com/tmc/grpc-websocket-proxy v0.0.0-20190109142713-0ad062ec5ee5 // indirect
-	github.com/ugorji/go/codec v0.0.0-20190320090025-2dc34c0b8780 // indirect
-	github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2 // indirect
-	golang.org/x/crypto v0.0.0-20190404164418-38d8ce5564a5 // indirect
-	golang.org/x/net v0.0.0-20190403144856-b630fd6fe46b // indirect
-	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a // indirect
-	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4 // indirect
-	google.golang.org/genproto v0.0.0-20190404172233-64821d5d2107 // indirect
-	gopkg.in/asn1-ber.v1 v1.0.0-20181015200546-f715ec2f112d // indirect
-	gopkg.in/gorethink/gorethink.v4 v4.1.0 // indirect
-	gopkg.in/ini.v1 v1.42.0 // indirect
-	gopkg.in/ory-am/dockertest.v2 v2.2.3 // indirect
-	k8s.io/api v0.0.0-20190404065945-709cf190c7b7 // indirect
-	layeh.com/radius v0.0.0-20190322222518-890bc1058917 // indirect
 )
