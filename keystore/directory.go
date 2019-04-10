@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io/ioutil"
 	"path"
+	"strings"
 	"sync"
 
 	"github.com/pkg/errors"
@@ -49,6 +50,10 @@ func (ks *DirectoryKeyStore) Update() error {
 
 	keys := make(map[string][]byte)
 	for _, info := range files {
+		if info.IsDir() || strings.HasPrefix(info.Name(), ".") {
+			continue
+		}
+
 		id := info.Name()
 		if _, ok := ks.keys[id]; !ok {
 			key, err := ioutil.ReadFile(path.Join(ks.path, id))
