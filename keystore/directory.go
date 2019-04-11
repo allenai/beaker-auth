@@ -55,13 +55,11 @@ func (ks *DirectoryKeyStore) Update() error {
 		}
 
 		id := info.Name()
-		if _, ok := ks.keys[id]; !ok {
-			key, err := ioutil.ReadFile(path.Join(ks.path, id))
-			if err != nil {
-				return errors.WithStack(err)
-			}
-			keys[id] = bytes.TrimSpace(key)
+		key, err := ioutil.ReadFile(path.Join(ks.path, id))
+		if err != nil {
+			return errors.WithStack(err)
 		}
+		keys[id] = bytes.TrimSpace(key)
 	}
 
 	ks.lock.Lock()

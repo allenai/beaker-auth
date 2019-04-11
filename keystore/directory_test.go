@@ -95,4 +95,27 @@ func TestDirectoryKeyStore(t *testing.T) {
 		assert.Nil(t, actualKey)
 		assert.Error(t, err)
 	})
+
+	t.Run("NopUpdate", func(t *testing.T) {
+		dir, err := ioutil.TempDir("", "")
+		require.NoError(t, err)
+
+		id := "a"
+		key := []byte("abc")
+		require.NoError(t, ioutil.WriteFile(path.Join(dir, id), key, 0644))
+
+		ks, err := NewDirectoryKeyStore(dir)
+		require.NotNil(t, ks)
+		require.NoError(t, err)
+
+		actualKey, err := ks.KeyFromID(id)
+		require.Equal(t, key, actualKey)
+		require.NoError(t, err)
+
+		require.NoError(t, ks.Update())
+
+		actualKey, err = ks.KeyFromID(id)
+		assert.Equal(t, key, actualKey)
+		assert.NoError(t, err)
+	})
 }
